@@ -1,0 +1,17 @@
+{
+  "name": "pi-interface",
+  "homepage": "https://github.com/alvaroandrioli/pi-robotica",
+  "authors": [
+    "AMAndrioli <andriolidevelop@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
