@@ -8,6 +8,8 @@ void setup() {
   arm.addState(50, 60, 70, 80);
   arm.addState(80, 70, 60, 50);
   arm.addState(100, 100, 100, 100);
+
+  arm.init();
 }
 
 void loop() {
