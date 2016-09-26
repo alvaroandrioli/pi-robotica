@@ -69,6 +69,7 @@ class RoboticArm {
         int _speed_a = 30;
         int _speed_b = 30;
         int _speed_c = 30;
+};
 
 RoboticArm::RoboticArm(int pin_a, int pin_b, int pin_c, int pin_d) {
     // iniciando pinos como saída
@@ -117,7 +118,7 @@ State* RoboticArm::createState(int angulo_a, int angulo_b, int angulo_c, int ang
 }
 
 void RoboticArm::printSerial() {
-    newState *state;
+    State *state;
 
     for (state = _head; state->next != NULL; state = state->next) {
         Serial.print("a -> ");
@@ -170,7 +171,8 @@ void RoboticArm::executeActions() {
         servoControler(_speed_a, _atual->angulo_a, prox->angulo_a, _servo_a);
         servoControler(_speed_b, _atual->angulo_b, prox->angulo_b, _servo_b);
         servoControler(_speed_c, _atual->angulo_c, prox->angulo_c, _servo_c);
-        servoControler(_speed_d, _atual->angulo_d, prox->angulo_d, 0);
+        servoControler(0, _atual->angulo_d, prox->angulo_d, _servo_d);
+        
         _atual = prox;
         prox = _atual->next;
     }
@@ -180,16 +182,16 @@ void RoboticArm::executeActions() {
     servoControler(_speed_a, _atual->angulo_a, prox->angulo_a, _servo_a);
     servoControler(_speed_b, _atual->angulo_b, prox->angulo_b, _servo_b);
     servoControler(_speed_c, _atual->angulo_c, prox->angulo_c, _servo_c);
-    servoControler(_speed_d, _atual->angulo_d, prox->angulo_d, 0);
+    servoControler(0, _atual->angulo_d, prox->angulo_d, _servo_d);
 
     _atual = _initial;
 }
 
 void RoboticArm::init() {
-    _servo_a.write(_initial.angulo_a);
-    _servo_b.write(_initial.angulo_b);
-    _servo_c.write(_initial.angulo_c);
-    _servo_d.write(_initial.angulo_d);
+    _servo_a.write(_initial->angulo_a);
+    _servo_b.write(_initial->angulo_b);
+    _servo_c.write(_initial->angulo_c);
+    _servo_d.write(_initial->angulo_d);
 }
 
 void RoboticArm::setSpeeds(int speed_a, int speed_b, int speed_c) {
