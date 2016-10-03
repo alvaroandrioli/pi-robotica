@@ -1,1 +1,45 @@
-
+<!DOCTYPE html>
+<html lang='pt-BR'>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>Projeto de robótica - interface</title>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+        <link rel="stylesheet" href="bower_components/vis/dist/vis.min.css">
+    </head>
+    <body ng-app="piInterfaceApp">
+        <div class="container">
+            <div class="row">
+                <h2 class="page-header">Aqui</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div id="graph"></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <p class="panel-title text-center">Controle</p>
+                        </div>
+                        <div class="panel-body">
+                            <uib-slider/>
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="app/app.js"></script>
+        <script src="app/app.constants.js"></script>
+        <script src="app/controller/main.controller.js"></script>
+        <script src="bower_components/vis/dist/vis.min.js"></script>
+    </body>
+</html>

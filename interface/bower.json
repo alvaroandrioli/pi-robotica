@@ -13,5 +13,11 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.1",
+    "vis": "^4.16.1",
+    "angular": "^1.5.8",
+    "angular-bootstrap": "^2.1.4"
+  }
 }
