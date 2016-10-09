@@ -1,19 +1,21 @@
 #include "RoboticArm.h"
 #include <Servo.h>
 
-RoboticArm arm(3, 5, 6, 9);
+RoboticArm arm;
 
 void setup() {
  
   Serial.begin(9600);
 
-  arm.addInitialState(0, 0, 0, 0);
-  arm.addState(90, 0, 0, 0);
+  arm.addInitialState(180, 90, 0, 0);
 
-  arm.setSpeeds(10, 10, 10);
+  arm.setSpeeds(10, 20, 10);
 
-  arm.init();
-
+  arm.init(3, 5, 6, 9);
+  
+  arm.addState(90, 180, 0, 0);
+  arm.addState(70, 70, 0, 0);
+ 
   arm.executeActions();
 }
 

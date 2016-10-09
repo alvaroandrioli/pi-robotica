@@ -7,7 +7,7 @@
 #ifndef robotic_arm_h
 #define robotic_arm_h
 
-#define DEBUG 1
+//#define DEBUG 1
 
 typedef struct node {
     int angulo_a;
@@ -20,7 +20,7 @@ typedef struct node {
 class RoboticArm {
     public:
         // construtor
-        RoboticArm(int pin_a, int pin_b, int pin_c, int pin_d);
+        RoboticArm();
 
         // adiciona um estado para a lista
         void addState(int angulo_a, int angulo_b, int angulo_c, int angulo_d);
@@ -32,7 +32,7 @@ class RoboticArm {
         void setSpeeds(int speed_a, int speed_b, int speed_c);
 
         // Coloca o braço no estado inicial
-        void init();
+        void init(int pin_a, int pin_b, int pin_c, int pin_d);
 
         // printa a lista na serial
         void printSerial();
@@ -81,18 +81,12 @@ class RoboticArm {
         int _speed_c = 30;
 };
 
-RoboticArm::RoboticArm(int pin_a, int pin_b, int pin_c, int pin_d) {
+RoboticArm::RoboticArm(void) {
     // iniciando pinos como saída
     //pinMode(pin_a, OUTPUT);
     // pinMode(pin_b, OUTPUT);
     // pinMode(pin_c, OUTPUT);
     // pinMode(pin_d, OUTPUT);
-
-    // adicionando os pinos nos servos
-    _servo_a.attach(pin_a);
-    _servo_b.attach(pin_b);
-    _servo_c.attach(pin_c);
-    _servo_d.attach(pin_d);
 
     // criando e inicializando a lista
     _head = NULL;
@@ -218,9 +212,13 @@ void RoboticArm::executeActions() {
     State *prox = _head;
 
     while (prox != NULL) {
+        delay(500);
         servoControler(_speed_a, _atual->angulo_a, prox->angulo_a, _servo_a);
+        delay(500);
         servoControler(_speed_b, _atual->angulo_b, prox->angulo_b, _servo_b);
+        delay(500);
         servoControler(_speed_c, _atual->angulo_c, prox->angulo_c, _servo_c);
+        delay(500);
         servoControler(0, _atual->angulo_d, prox->angulo_d, _servo_d);
 
         _atual = prox;
@@ -229,21 +227,31 @@ void RoboticArm::executeActions() {
 
     prox = _initial;
 
+    delay(500);
     servoControler(_speed_a, _atual->angulo_a, prox->angulo_a, _servo_a);
+    delay(500);
     servoControler(_speed_b, _atual->angulo_b, prox->angulo_b, _servo_b);
+    delay(500);
     servoControler(_speed_c, _atual->angulo_c, prox->angulo_c, _servo_c);
+    delay(500);
     servoControler(0, _atual->angulo_d, prox->angulo_d, _servo_d);
 
     _atual = _initial;
 }
 
-void RoboticArm::init() {
+void RoboticArm::init(int pin_a, int pin_b, int pin_c, int pin_d) {
+    // adicionando os pinos nos servos
+    _servo_a.attach(pin_a);
+    _servo_b.attach(pin_b);
+    _servo_c.attach(pin_c);
+    _servo_d.attach(pin_d);
+
     #ifdef DEBUG
         Serial.print("RoboticArm::init");
         Serial.print(" Go to initial state ");
         printSerialState(_initial->angulo_a, _initial->angulo_b, _initial->angulo_c, _initial->angulo_d);
     #endif
-    
+
     _servo_a.write(_initial->angulo_a);
     _servo_b.write(_initial->angulo_b);
     _servo_c.write(_initial->angulo_c);
