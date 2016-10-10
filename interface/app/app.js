@@ -1,4 +1,4 @@
-angular.module('piInterfaceApp', ['ui.bootstrap'])
+angular.module('piInterfaceApp', ['ui.bootstrap', 'rzModule', 'uiSwitch', 'plotly'])
     .config(function() {
 
     })

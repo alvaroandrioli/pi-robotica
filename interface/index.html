@@ -7,16 +7,17 @@
         <title>Projeto de robótica - interface</title>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-        <link rel="stylesheet" href="bower_components/vis/dist/vis.min.css">
+        <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.min.css">
+        <link rel="stylesheet" href="bower_components/angular-ui-switch/angular-ui-switch.min.css">
     </head>
     <body ng-app="piInterfaceApp">
-        <div class="container">
+        <div class="container" ng-controller="mainController">
             <div class="row">
-                <h2 class="page-header">Aqui</h2>
+                <h2 class="page-header">Controle do braço</h2>
             </div>
             <div class="row">
                 <div class="col-lg-7">
-                    <div id="graph"></div>
+                    <plotly plotly-data="data" plotly-layout="layout" plotly-options="options"></plotly>
                 </div>
                 <div class="col-lg-4">
                     <div class="panel panel-primary">
@@ -24,10 +25,36 @@
                             <p class="panel-title text-center">Controle</p>
                         </div>
                         <div class="panel-body">
-                            <uib-slider/>
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>
+                                        <strong>Angulo A</strong>
+                                    </label>
+                                    <rzslider rz-slider-options="optionA" rz-slider-model="slider.angulo_a"></rzslider>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <strong>Angulo B</strong>
+                                    </label>
+                                    <rzslider rz-slider-options="optionB" rz-slider-model="slider.angulo_b"></rzslider>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <strong>Angulo C</strong>
+                                    </label>
+                                    <rzslider rz-slider-options="optionC" rz-slider-model="slider.angulo_c"></rzslider>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <strong>Pinça</strong>
+                                    </label>
+                                    <br>
+                                    <switch on="Close" off="Open" ng-model="slider.claw" class="green"></switch>
+                                </div>
+                            </form>
                         </div>
                         <div class="panel-footer">
-                            <button class="btn btn-primary">Salvar</button>
+                            <button ng-click="addPoint()" class="btn btn-primary">Adicionar</button>
                         </div>
                     </div>
                 </div>
@@ -37,9 +64,12 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/angularjs-slider/dist/rzslider.min.js"></script>
+        <script src="bower_components/angular-ui-switch/angular-ui-switch.min.js"></script>
+        <script src="bower_components/plotly.js/dist/plotly.min.js"></script>
+        <script src="bower_components/angular-plotly/src/angular-plotly.js"></script>
         <script src="app/app.js"></script>
         <script src="app/app.constants.js"></script>
         <script src="app/controller/main.controller.js"></script>
-        <script src="bower_components/vis/dist/vis.min.js"></script>
     </body>
 </html>
