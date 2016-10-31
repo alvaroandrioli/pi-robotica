@@ -1,10 +1,11 @@
 angular.module('piInterfaceApp')
     .controller('mainController', function($scope) {
+        $scope.states = [];
+
         $scope.slider = {
             angulo_a: 30,
             angulo_b: 0,
             angulo_c: 35,
-            angulo_d: 0,
             claw: false
         };
 
@@ -13,17 +14,20 @@ angular.module('piInterfaceApp')
             ceil: 40,
             step: 1
         }
+
         $scope.optionB = {
             floor: 0,
             ceil: 90,
             step: 1
         }
+
         $scope.optionC = {
             floor: 35,
             ceil: 70,
             step: 1
         }
-        $scope.optionD = {
+
+        $scope.claw = {
             floor: 0,
             ceil: 1,
             step: 1
@@ -36,28 +40,80 @@ angular.module('piInterfaceApp')
             c: []
         }
 
+        $scope.clearStates = function() {
+            $scope.states = [];
+        }
+
+        $scope.addState = function() {
+            $scope.states.push({
+                angulo_a: $scope.slider.angulo_a,
+                angulo_b: $scope.slider.angulo_b,
+                angulo_c: $scope.slider.angulo_c,
+                claw: $scope.slider.claw
+            });
+        }
+
+        $scope.removeState = function(index) {
+            $scope.states.splice(index,1);
+            $scope.dataPlot.x.splice(index, 1);
+            $scope.dataPlot.y.splice(index, 1);
+            $scope.dataPlot.z.splice(index, 1);
+            $scope.dataPlot.c.splice(index, 1);
+        }
+
         $scope.addPoint = function() {
+            $scope.addState();
             $scope.dataPlot.x.push($scope.slider.angulo_a);
             $scope.dataPlot.y.push($scope.slider.angulo_b);
             $scope.dataPlot.z.push($scope.slider.angulo_c);
+            $scope.dataPlot.c.push($scope.slider.claw ? 10 : -10);
+        }
 
-            if ($scope.dataPlot.x.length <= 1 && $scope.dataPlot.y.length <= 1 && $scope.dataPlot.z.length <= 1 && $scope.dataPlot.c.length <= 1) {
-                    if ($scope.slider.claw)
-                        //fechado
-                        $scope.dataPlot.c.push(5);
-                    else
-                        //aberto
-                        $scope.dataPlot.c.push(-5);
+        $scope.addLastPoint = function(index) {
+            $scope.dataPlot.x.push($scope.states[index].angulo_a);
+            $scope.dataPlot.y.push($scope.states[index].angulo_b);
+            $scope.dataPlot.z.push($scope.states[index].angulo_c);
+            $scope.dataPlot.c.push($scope.states[index].claw);
+        }
+
+        $scope.removeLastPoint = function() {
+            $scope.dataPlot.x.pop();
+            $scope.dataPlot.y.pop();
+            $scope.dataPlot.z.pop();
+            $scope.dataPlot.c.pop();
+        }
+
+        $scope.validateStates = function() {
+            return $scope.states.every(function(state) {
+                return !state.selected;
+            });
+        }
+
+        $scope.toggleState = function(index) {
+            $scope.states[index]['selected'] = !$scope.states[index].selected;
+
+            if ($scope.states[index]['selected']) {
+                $scope.addLastPoint(index   );
             } else {
-                if ($scope.slider.claw)
-                    //fechado
-                    $scope.dataPlot.c.push(10);
-                else
-                    //aberto
-                    $scope.dataPlot.c.push(-10);
+                $scope.removeLastPoint();
             }
+        }
 
+        $scope.parser = function() {
+            var res = 'b';
 
+            angular.forEach($scope.states, function(state) {
+                res += 's';
+                res += 'a' + normalize(state.angulo_a);
+                res += 'b' + normalize(state.angulo_b);
+                res += 'c' + normalize(state.angulo_c);
+                res += 'd' + (state.claw ? '001' : '000');
+                res += 'f';
+            })
+
+            res += 'e';
+
+            $scope.stringState = res;
         }
 
         $scope.data = [{x: $scope.dataPlot.x,
@@ -71,6 +127,17 @@ angular.module('piInterfaceApp')
                         cmax: 10
                     }
                 }];
+
+        function normalize(number) {
+            var temp = String(number);
+
+            if (temp.length == 1)
+                temp = '00'+temp;
+            if (temp.length == 2)
+                temp = '0'+temp;
+
+            return temp;
+        }
 
         $scope.layout = {title: 'Posição do braço'};
         $scope.options = {showLink: false, displayLogo: false, displayModeBar: false};

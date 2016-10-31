@@ -7,14 +7,14 @@ void setup() {
  
   Serial.begin(9600);
 
-  arm.addInitialState(180, 90, 0, 0);
+  arm.addInitialState(0, 0, 0, 0);
 
-  arm.setSpeeds(10, 20, 10);
+  arm.setSpeeds(30, 30, 30);
 
   arm.init(3, 5, 6, 9);
   
-  arm.addState(90, 180, 0, 0);
-  arm.addState(70, 70, 0, 0);
+  arm.addState(90, 90, 90, 90);
+  arm.addState(180, 180, 180, 180);
  
   arm.executeActions();
 }
