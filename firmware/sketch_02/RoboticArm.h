@@ -117,7 +117,7 @@ void RoboticArm::addState(int angulo_a, int angulo_b, int angulo_c, int angulo_d
 }
 
 State* RoboticArm::createState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
-    State *newState = (State*)malloc(sizeOf(State));
+    State *newState = (State*)malloc(sizeof(State));
 
     newState->angulo_a = angulo_a;
     newState->angulo_b = angulo_b;
@@ -284,7 +284,7 @@ void RoboticArm::printSerialState(int a, int b, int c, int d) {
 
 void RoboticArm::clearActions() {
     while (_head != NULL) {
-        State *next = _head.next;
+        State *next = _head->next;
         free(_head);
         _head = next;
     }
