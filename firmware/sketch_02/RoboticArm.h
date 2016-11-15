@@ -41,7 +41,9 @@ class RoboticArm {
         void executeActions();
 
         // set debug
-        void setDebug(int enable);
+        void setDebug();
+
+        void clearActions();
 
     private:
         // Cria um novo estado para a lista
@@ -115,7 +117,7 @@ void RoboticArm::addState(int angulo_a, int angulo_b, int angulo_c, int angulo_d
 }
 
 State* RoboticArm::createState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
-    State *newState = new State;
+    State *newState = (State*)malloc(sizeOf(State));
 
     newState->angulo_a = angulo_a;
     newState->angulo_b = angulo_b;
@@ -278,6 +280,18 @@ void RoboticArm::printSerialState(int a, int b, int c, int d) {
     Serial.print(c);
     Serial.print(" d ->");
     Serial.println(d);
+}
+
+void RoboticArm::clearActions() {
+    while (_head != NULL) {
+        State *next = _head.next;
+        free(_head);
+        _head = next;
+    }
+    _head = NULL;
+    _tail = NULL;
+    _atual = NULL;
+    printSerial();
 }
 
 #endif
