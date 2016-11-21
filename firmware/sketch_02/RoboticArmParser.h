@@ -17,11 +17,9 @@ class RoboticArmParse {
     public:
         RoboticArmParse(RoboticArm *arm);
 
-        void parseString(Char *string);
+        void parseString(String code);
 
     private:
-        RoboticArm *_arm;
-
         void _clearAcc();
 
         void _addChar();
@@ -30,6 +28,8 @@ class RoboticArmParse {
 
         void _addState();
 
+        RoboticArm *_arm;
+
         String _code;
 
         String _acc;
@@ -37,8 +37,6 @@ class RoboticArmParse {
         char _nextChar;
 
         int _pos;
-
-        int _len;
 };
 
 RoboticArmParse::RoboticArmParse(RoboticArm *arm) {
@@ -50,8 +48,8 @@ void RoboticArmParse::_clearAcc() {
 }
 
 void RoboticArmParse::_getNextChar() {
-    _nextChar = _code.charAt(_pos + 1);
     _pos++;
+    _nextChar = _code.charAt(_pos);
 }
 
 void RoboticArmParse::_addChar() {
@@ -60,22 +58,23 @@ void RoboticArmParse::_addChar() {
 }
 
 void RoboticArmParse::_addState() {
+    _clearAcc();
     _getNextChar();
     while (_nextChar != 'f') {
         _addChar();
     }
-    String a = _acc.subString(1,3);
-    String b = _acc.subString(4,6);
-    String c = _acc.subString(7,9);
-    String d = _acc.subString(10,12);
+    String a = _acc.substring(1,3);
+    String b = _acc.substring(4,6);
+    String c = _acc.substring(7,9);
+    String d = _acc.substring(10,12);
     _arm->addState(a.toInt(), b.toInt(), c.toInt(), d.toInt());
 }
 
 void RoboticArmParse::parseString(String code) {
     _code = code;
-    _len = code.length();
     _pos = 0;
     _nextChar = code.charAt(0);
+    _arm->clearActions();
 
     if (_nextChar != 'b')
         Serial.println("String not valid");

@@ -10,35 +10,35 @@ angular.module('piInterfaceApp')
         };
 
         $scope.optionA = {
-            floor: 30,
-            ceil: 40,
+            floor: 0,
+            ceil: 180,
             step: 1
-        }
+        };
 
         $scope.optionB = {
-            floor: 0,
-            ceil: 90,
+            floor: 180,
+            ceil: 120,
             step: 1
-        }
+        };
 
         $scope.optionC = {
-            floor: 35,
-            ceil: 70,
+            floor: 0,
+            ceil: 50,
             step: 1
-        }
+        };
 
         $scope.claw = {
             floor: 0,
             ceil: 1,
             step: 1
-        }
+        };
 
         $scope.dataPlot = {
             x: [],
             y: [],
             z: [],
             c: []
-        }
+        };
 
         $scope.clearStates = function() {
             $scope.states = [];

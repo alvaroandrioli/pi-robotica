@@ -39,10 +39,7 @@ class RoboticArm {
 
         // executa cada estado da lista
         void executeActions();
-
-        // set debug
-        void setDebug();
-
+        
         void clearActions();
 
     private:

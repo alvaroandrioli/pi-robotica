@@ -1,7 +1,8 @@
-#include "RoboticArm.h"
-#include <Servo.h>
+  #include "RoboticArm.h"
+#include "RoboticArmParser.h"
 
 RoboticArm arm;
+RoboticArmParse parse(&arm);
 
 void setup() {
 
@@ -12,19 +13,12 @@ void setup() {
   arm.setSpeeds(30, 30, 30);
 
   arm.init(3, 5, 6, 9);
-
-  arm.addState(90, 90, 90, 90);
-  arm.addState(180, 180, 180, 180);
-
-  arm.printSerial();
 }
 
 void loop() {
     char res = Serial.read();
-    if (res == 'a') {
-      arm.clearActions();
-    }
-    if (res == 'b') {
-     // arm.executeActions();
+    if (Serial.available()) {
+        parse.parseString(Serial.readString());
+        arm.printSerial();
     }
 }
