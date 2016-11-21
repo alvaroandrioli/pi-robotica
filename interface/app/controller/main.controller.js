@@ -104,10 +104,10 @@ angular.module('piInterfaceApp')
 
             angular.forEach($scope.states, function(state) {
                 res += 's';
-                res += 'a' + normalize(state.angulo_a);
-                res += 'b' + normalize(state.angulo_b);
-                res += 'c' + normalize(state.angulo_c);
-                res += 'd' + (state.claw ? '001' : '000');
+                res += normalize(state.angulo_a);
+                res += normalize(state.angulo_b);
+                res += normalize(state.angulo_c);
+                res += (state.claw ? '001' : '000');
                 res += 'f';
             })
 
