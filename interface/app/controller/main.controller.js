@@ -1,5 +1,5 @@
 angular.module('piInterfaceApp')
-    .controller('mainController', function($scope) {
+    .controller('mainController', function($scope, Server) {
         $scope.states = [];
 
         $scope.slider = {
@@ -16,13 +16,13 @@ angular.module('piInterfaceApp')
         };
 
         $scope.optionB = {
-            floor: 180,
-            ceil: 120,
+            floor: 60,
+            ceil: 0,
             step: 1
         };
 
         $scope.optionC = {
-            floor: 0,
+            floor: 130,
             ceil: 50,
             step: 1
         };
@@ -139,6 +139,18 @@ angular.module('piInterfaceApp')
             return temp;
         }
 
+        $scope.sendCode = function() {
+            Server.sendCode($scope.stringState)
+                .then(function() {
+                    console.log("deu :)");
+                })
+                .catch(function(error) {
+                    console.log("pau aqui");
+                    console.log(error);
+                });
+        }
+
         $scope.layout = {title: 'Posição do braço'};
         $scope.options = {showLink: false, displayLogo: false, displayModeBar: false};
+
     });

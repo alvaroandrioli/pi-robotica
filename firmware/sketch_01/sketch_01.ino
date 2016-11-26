@@ -1,29 +1,21 @@
 #include <Servo.h>
-Servo servo1;
-Servo servo2;
-Servo servo3;
-Servo servo4;
+Servo servo;
 
 void setup() {
   Serial.begin(9600);
   
-  servo1.attach(3);
-  servo2.attach(5);
-  servo3.attach(6);
-  servo4.attach(9);
-  servo1.write(0);
-  servo2.write(0);
-  servo3.write(0);
-  servo4.write(0);
-  servo_control(20, 0, 90, servo4);
-  servo_control(10, 90, 180, servo4);
+  servo.attach(5);
+  servo.write(0);
 }
 
 void loop() {
-  
+  if (Serial.available()) {
+    String res = Serial.readString();
+    Serial.println(res); 
+  }
 }
 
-void servo_control(int tempo, int angulo_inicial, int angulo_final, Servo servo) {
+void servo_control(int tempo, int angulo_inicial, int angulo_final, Servo servo) {  
   int direcao;
 
   if (angulo_inicial < angulo_final)

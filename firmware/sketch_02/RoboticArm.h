@@ -288,7 +288,6 @@ void RoboticArm::clearActions() {
     _head = NULL;
     _tail = NULL;
     _atual = NULL;
-    printSerial();
 }
 
 #endif

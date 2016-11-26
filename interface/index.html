@@ -66,7 +66,7 @@
                     <code>{{ stringState }}</code>
                     <br>
                     <br>
-                    <button class="btn btn-primary">Enviar</button>
+                    <button ng-click="sendCode()" class="btn btn-primary">Enviar</button>
                 </div>
             </div>
             <div class="row">
@@ -104,6 +104,7 @@
         <script src="bower_components/angular-plotly/src/angular-plotly.js"></script>
         <script src="app/app.js"></script>
         <script src="app/app.constants.js"></script>
+        <script src="app/resource/Server.js"></script>
         <script src="app/controller/main.controller.js"></script>
     </body>
 </html>

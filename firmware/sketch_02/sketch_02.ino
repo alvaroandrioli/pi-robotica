@@ -1,4 +1,4 @@
-  #include "RoboticArm.h"
+#include "RoboticArm.h"
 #include "RoboticArmParser.h"
 
 RoboticArm arm;
@@ -8,17 +8,18 @@ void setup() {
 
   Serial.begin(9600);
 
-  arm.addInitialState(0, 0, 0, 0);
+  arm.addInitialState(0, 60, 130, 0);
 
-  arm.setSpeeds(30, 30, 30);
+  arm.setSpeeds(15, 15, 15);
 
   arm.init(3, 5, 6, 9);
 }
 
 void loop() {
-    char res = Serial.read();
-    if (Serial.available()) {
-        parse.parseString(Serial.readString());
-        arm.printSerial();
-    }
+  if (Serial.available()) {
+    String code = Serial.readString();
+    parse.parseString(code);
+
+    arm.printSerial();
+  }
 }
