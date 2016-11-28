@@ -17,13 +17,13 @@ angular.module('piInterfaceApp')
 
         $scope.optionB = {
             floor: 0,
-            ceil: 60,
+            ceil: 40,
             step: 1
         };
 
         $scope.optionC = {
-            floor: 50,
-            ceil: 130,
+            floor: 100,
+            ceil: 180,
             step: 1
         };
 

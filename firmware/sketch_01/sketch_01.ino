@@ -4,15 +4,12 @@ Servo servo;
 void setup() {
   Serial.begin(9600);
   
-  servo.attach(5);
-  servo.write(0);
+  servo.attach(10);
+  servo.write(145);
 }
 
 void loop() {
-  if (Serial.available()) {
-    String res = Serial.readString();
-    Serial.println(res.charAt(0)); 
-  }
+  
 }
 
 void servo_control(int tempo, int angulo_inicial, int angulo_final, Servo servo) {  

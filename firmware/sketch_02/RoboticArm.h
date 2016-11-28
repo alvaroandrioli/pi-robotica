@@ -7,7 +7,7 @@
 #ifndef robotic_arm_h
 #define robotic_arm_h
 
-//#define DEBUG 1
+#define DEBUG 1
 
 typedef struct node {
     int angulo_a;
@@ -294,6 +294,7 @@ void RoboticArm::clearActions() {
     _head = NULL;
     _tail = NULL;
     _atual = NULL;
+    _size = 0;
 }
 
 void RoboticArm::goToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {

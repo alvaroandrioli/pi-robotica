@@ -69,11 +69,20 @@ void RoboticArmParse::_addState() {
     while (_nextChar != 'f') {
         _addChar();
     }
-    String a = _acc.substring(1,3);
-    String b = _acc.substring(4,6);
-    String c = _acc.substring(7,9);
-    String d = _acc.substring(10,12);
-    _arm->addState(a.toInt(), b.toInt(), c.toInt(), d.toInt());
+    String a = _acc.substring(0,3);
+    String b = _acc.substring(3,6);
+    String c = _acc.substring(6,9);
+    String d = _acc.substring(9,12);
+
+    int dt = d.toInt();
+
+    if (dt == 0) {
+        dt = 180;
+    } else {
+        dt = 145;
+    }
+
+    _arm->addState(a.toInt(), b.toInt(), c.toInt(), dt);
 }
 
 void RoboticArmParse::parseString(String code) {
@@ -95,11 +104,20 @@ void RoboticArmParse::parseString(String code) {
 }
 
 void RoboticArmParse::parseState(String state) {
-    _a = _acc.substring(1,3);
-    _b = _acc.substring(4,6);
-    _c = _acc.substring(7,9);
-    _d = _acc.substring(10,12);
-    _arm->goToState(_a.toInt(), _b.toInt(), _c.toInt(), _d.toInt());
+    _a = state.substring(1,4);
+    _b = state.substring(4,7);
+    _c = state.substring(7,10);
+    _d = state.substring(10,13);
+
+    int dt = _d.toInt();
+
+    if (dt == 0) {
+        dt = 180;
+    } else {
+        dt = 145;
+    }
+
+    _arm->goToState(_a.toInt(), _b.toInt(), _c.toInt(), dt);
 }
 
 void RoboticArmParse::toInitialState() {
