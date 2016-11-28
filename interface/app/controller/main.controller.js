@@ -1,5 +1,5 @@
 angular.module('piInterfaceApp')
-    .controller('mainController', function($scope, Server) {
+    .controller('mainController', function($scope, Server, $uibModal, $uibModalStack) {
         $scope.states = [];
 
         $scope.slider = {
@@ -16,14 +16,14 @@ angular.module('piInterfaceApp')
         };
 
         $scope.optionB = {
-            floor: 60,
-            ceil: 0,
+            floor: 0,
+            ceil: 60,
             step: 1
         };
 
         $scope.optionC = {
-            floor: 130,
-            ceil: 50,
+            floor: 50,
+            ceil: 130,
             step: 1
         };
 
@@ -93,13 +93,14 @@ angular.module('piInterfaceApp')
             $scope.states[index]['selected'] = !$scope.states[index].selected;
 
             if ($scope.states[index]['selected']) {
-                $scope.addLastPoint(index   );
+                sendState($scope.states[index]);
+                $scope.addLastPoint(index);
             } else {
                 $scope.removeLastPoint();
             }
         }
 
-        $scope.parser = function() {
+        function parser() {
             var res = 'b';
 
             angular.forEach($scope.states, function(state) {
@@ -140,17 +141,53 @@ angular.module('piInterfaceApp')
         }
 
         $scope.sendCode = function() {
+            parser();
+            openLoadingModal();
             Server.sendCode($scope.stringState)
                 .then(function() {
-                    console.log("deu :)");
+                    $scope.modalInstance.close(true);
                 })
                 .catch(function(error) {
-                    console.log("pau aqui");
+                    console.log("Error");
                     console.log(error);
+                    $scope.modalInstance.close(true);
                 });
         }
 
         $scope.layout = {title: 'Posição do braço'};
         $scope.options = {showLink: false, displayLogo: false, displayModeBar: false};
+
+        function openLoadingModal() {
+            $scope.modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'loading.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'lg',
+            });
+        }
+
+        function sendState(state) {
+            openLoadingModal();
+            Server.sendCode(parseState(state))
+                .then(function() {
+                    $scope.modalInstance.close(true);
+                })
+                .catch(function(error) {
+                    console.log("Error");
+                    console.log(error);
+                    $scope.modalInstance.close(true);
+                });
+        }
+
+        function parseState(state) {
+            var res = "s";
+            res += normalize(state.angulo_a);
+            res += normalize(state.angulo_b);
+            res += normalize(state.angulo_c);
+            res += (state.claw ? '001' : '000');
+            res += 'f';
+            return res;
+        }
 
     });

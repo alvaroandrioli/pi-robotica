@@ -39,8 +39,14 @@ class RoboticArm {
 
         // executa cada estado da lista
         void executeActions();
-        
+
+        // limpa a lista de estados
         void clearActions();
+
+        // vai do estado inicial para indicado
+        void goToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d);
+
+        void goToInitialState(int angulo_a, int angulo_b, int angulo_c, int angulo_d);
 
     private:
         // Cria um novo estado para a lista
@@ -232,7 +238,7 @@ void RoboticArm::executeActions() {
     servoControler(_speed_b, _atual->angulo_b, prox->angulo_b, _servo_b);
     delay(500);
     servoControler(_speed_c, _atual->angulo_c, prox->angulo_c, _servo_c);
-    delay(500);
+    delay(1000);
     servoControler(0, _atual->angulo_d, prox->angulo_d, _servo_d);
 
     _atual = _initial;
@@ -288,6 +294,39 @@ void RoboticArm::clearActions() {
     _head = NULL;
     _tail = NULL;
     _atual = NULL;
+}
+
+void RoboticArm::gotToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
+    delay(500);
+    servoControler(_speed_a, _initial->angulo_a, angulo_a, _servo_a);
+    delay(500);
+    servoControler(_speed_b, _initial->angulo_b, angulo_b, _servo_b);
+    delay(500);
+    servoControler(_speed_c, _initial->angulo_c, angulo_c, _servo_c);
+    delay(1000);
+    servoControler(0, initial->angulo_d, angulo_d, _servo_d);
+}
+
+void RoboticArm::goToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
+    delay(500);
+    servoControler(_speed_a, _initial->angulo_a, angulo_a, _servo_a);
+    delay(500);
+    servoControler(_speed_b, _initial->angulo_b, angulo_b, _servo_b);
+    delay(500);
+    servoControler(_speed_c, _initial->angulo_c, angulo_c, _servo_c);
+    delay(1000);
+    servoControler(0, initial->angulo_d, angulo_d, _servo_d);
+}
+
+void RoboticArm::goToInitialState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
+    delay(500);
+    servoControler(_speed_a, angulo_a, _initial->angulo_a, _servo_a);
+    delay(500);
+    servoControler(_speed_b, angulo_b, _initial->angulo_b, _servo_b);
+    delay(500);
+    servoControler(_speed_c, angulo_c, _initial->angulo_c, _servo_c);
+    delay(1000);
+    servoControler(0, angulo_d, initial->angulo_d, _servo_d);
 }
 
 #endif

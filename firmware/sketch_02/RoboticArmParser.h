@@ -19,6 +19,10 @@ class RoboticArmParse {
 
         void parseString(String code);
 
+        void goToState(String state);
+
+        void goToInitialState();
+
     private:
         void _clearAcc();
 
@@ -37,6 +41,8 @@ class RoboticArmParse {
         char _nextChar;
 
         int _pos;
+
+        String _a,_b,_c,_d;
 };
 
 RoboticArmParse::RoboticArmParse(RoboticArm *arm) {
@@ -86,6 +92,18 @@ void RoboticArmParse::parseString(String code) {
 
         _getNextChar();
     }
+}
+
+void RoboticArm::goToState(String state) {
+    _a = _acc.substring(1,3);
+    _b = _acc.substring(4,6);
+    _c = _acc.substring(7,9);
+    _d = _acc.substring(10,12);
+    _arm.goToState(_a.toInt(), _b.toInt(), _c.toInt(), _d.toInt());
+}
+
+void RoboticArm::goToInitialState() {
+    _arm.goToInitialState(_a.toInt(), _b.toInt(), _c.toInt(), _d.toInt());
 }
 
 // b
