@@ -296,17 +296,6 @@ void RoboticArm::clearActions() {
     _atual = NULL;
 }
 
-void RoboticArm::gotToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
-    delay(500);
-    servoControler(_speed_a, _initial->angulo_a, angulo_a, _servo_a);
-    delay(500);
-    servoControler(_speed_b, _initial->angulo_b, angulo_b, _servo_b);
-    delay(500);
-    servoControler(_speed_c, _initial->angulo_c, angulo_c, _servo_c);
-    delay(1000);
-    servoControler(0, initial->angulo_d, angulo_d, _servo_d);
-}
-
 void RoboticArm::goToState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
     delay(500);
     servoControler(_speed_a, _initial->angulo_a, angulo_a, _servo_a);
@@ -315,7 +304,7 @@ void RoboticArm::goToState(int angulo_a, int angulo_b, int angulo_c, int angulo_
     delay(500);
     servoControler(_speed_c, _initial->angulo_c, angulo_c, _servo_c);
     delay(1000);
-    servoControler(0, initial->angulo_d, angulo_d, _servo_d);
+    servoControler(0, _initial->angulo_d, angulo_d, _servo_d);
 }
 
 void RoboticArm::goToInitialState(int angulo_a, int angulo_b, int angulo_c, int angulo_d) {
@@ -326,7 +315,7 @@ void RoboticArm::goToInitialState(int angulo_a, int angulo_b, int angulo_c, int 
     delay(500);
     servoControler(_speed_c, angulo_c, _initial->angulo_c, _servo_c);
     delay(1000);
-    servoControler(0, angulo_d, initial->angulo_d, _servo_d);
+    servoControler(0, angulo_d, _initial->angulo_d, _servo_d);
 }
 
 #endif

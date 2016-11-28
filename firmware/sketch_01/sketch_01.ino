@@ -11,7 +11,7 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     String res = Serial.readString();
-    Serial.println(res); 
+    Serial.println(res.charAt(0)); 
   }
 }
 

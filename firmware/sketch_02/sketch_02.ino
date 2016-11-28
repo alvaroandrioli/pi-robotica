@@ -2,7 +2,7 @@
 #include "RoboticArmParser.h"
 
 RoboticArm arm;
-RoboticArmParse parse(&arm);
+RoboticArmParse parser(&arm);
 int sample;
 
 #define BTN 1
@@ -25,17 +25,17 @@ void loop() {
     if (Serial.available()) {
         String code = Serial.readString();
         if (!sample && code.charAt(0) == 'b')
-            parse.parseString(code);
+            parser.parseString(code);
 
         if (sample && code.charAt(0) == 's') {
             sample = 1;
-            parse.goToState(code);
+            parser.parseState(code);
         }
     }
 
     if (digitalRead(BTN)) {
         if (sample) {
-            parse.goToInitialState(code);
+            parser.toInitialState();
             sample = 0;
         } else {
             arm.executeActions();
